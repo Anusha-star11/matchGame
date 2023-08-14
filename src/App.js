@@ -402,7 +402,12 @@ class App extends Component {
             alt="website logo"
           />
           <div className="timer-score">
-            <p className="paragraph-element">Score:{score}</p>
+            <li>
+              <p className="paragraph-element">
+                Score:
+                <span className="paragraph-element">{score}</span>
+              </p>
+            </li>
             <img
               src="https://assets.ccbp.in/frontend/react-js/match-game-timer-img.png"
               alt="timer"
