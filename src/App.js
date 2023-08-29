@@ -266,9 +266,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    /* eslint-disable no-unused-vars */
-    const {score} = this.state
-    /* eslint-disable no-unused-vars */
+    // const {score} = this.state
+
     this.setState({score: 0})
     this.timerId = setInterval(this.tick, 1000)
   }
@@ -313,51 +312,6 @@ class App extends Component {
     }
   }
 
-  renderAuthButton = () => {
-    const {activeTabId, imagesListA} = this.state
-    if (activeTabId === 'FRUIT') {
-      const fruitsTab = imagesListA.filter(each => each.category === 'FRUIT')
-      return (
-        <div className="image-Item">
-          {fruitsTab.map(each => (
-            <Images
-              key={each.id}
-              imageItem={each}
-              onClickImage={this.onClickImage}
-            />
-          ))}
-        </div>
-      )
-    }
-    if (activeTabId === 'ANIMAL') {
-      const animalsTab = imagesListA.filter(each => each.category === 'ANIMAL')
-      return (
-        <div className="image-Item">
-          {animalsTab.map(each => (
-            <Images
-              key={each.id}
-              imageItem={each}
-              onClickImage={this.onClickImage}
-            />
-          ))}
-        </div>
-      )
-    }
-    // if (activeTab.tabId === 'PLACE') {
-    const placesTab = imagesListA.filter(each => each.category === 'PLACE')
-    return (
-      <div className="image-Item">
-        {placesTab.map(each => (
-          <Images
-            key={each.id}
-            imageItem={each}
-            onClickImage={this.onClickImage}
-          />
-        ))}
-      </div>
-    )
-  }
-
   onClickPlayAgainButton = () => {
     const {score, seconds, isGameOver} = this.state
     this.setState({score: 0, seconds: 60, isGameOver: false})
@@ -392,7 +346,17 @@ class App extends Component {
   }
 
   render() {
-    const {tabsListA, score, seconds, currentImg, isGameOver} = this.state
+    const {
+      tabsListA,
+      score,
+      seconds,
+      currentImg,
+      isGameOver,
+      activeTabId,
+    } = this.state
+    const filteredList = imagesList.filter(
+      each => each.category === activeTabId,
+    )
 
     return (
       <div className="MatchGame-page">
@@ -439,7 +403,15 @@ class App extends Component {
               </ul>
             </nav>
 
-            <div>{this.renderAuthButton()}</div>
+            <ul className="image-Item">
+              {filteredList.map(each => (
+                <Images
+                  key={each.id}
+                  imageItem={each}
+                  onClickImage={this.onClickImage}
+                />
+              ))}
+            </ul>
           </div>
         )}
       </div>
